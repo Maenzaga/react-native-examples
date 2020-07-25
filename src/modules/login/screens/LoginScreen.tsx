@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {
   ScrollView,
-  SafeAreaView,
   Button,
   View,
   Text,
@@ -11,8 +10,8 @@ import {
   AsyncStorage,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {ApplicationState} from '../store';
-import {LoginActionTypes} from '../modules/login/login.actions';
+import {ApplicationState} from '../../../store';
+import {LoginActionTypes} from '../login.actions';
 import {useNavigation} from '@react-navigation/native';
 
 export const LoginScreen = () => {
@@ -25,7 +24,7 @@ export const LoginScreen = () => {
   useEffect(() => {
     if (user) {
       navigation.reset({
-        routes: [{name: 'HomeScreen'}],
+        routes: [{name: 'WelcomeScreen'}],
       });
     }
   }, [user, navigation]);

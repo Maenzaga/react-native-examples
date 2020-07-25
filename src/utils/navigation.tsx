@@ -1,11 +1,12 @@
 import React from 'react';
-import {TouchableOpacity, Text} from 'react-native';
+import {TouchableOpacity, Text, View} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {LoginScreen} from '../screens/LoginScreen';
-import {HomeScreen} from '../screens/HomeScreen';
 import {useDispatch} from 'react-redux';
-import {LoginActionTypes} from '../modules/login/login.actions';
-import {RegistrationScreen} from '../screens/RegistrationScreen';
+import HomeScreen from '../screens/HomeScreen';
+import {LoginScreen, WelcomeScreen, LoginActionTypes} from '../modules/login';
+import {RegistrationScreen} from '../modules/signup';
+import {TaskListScreen, NewTaskScreen} from '../modules/todolist';
+import {Screens} from '../paths';
 
 const AppStack = createStackNavigator();
 
@@ -13,15 +14,16 @@ export const AppNavigator = () => {
   const dispatch = useDispatch();
 
   return (
-    <AppStack.Navigator>
+    <AppStack.Navigator initialRouteName={Screens.HomeScreen}>
+      <AppStack.Screen name={Screens.HomeScreen} component={HomeScreen} />
       <AppStack.Screen
-        name="LoginScreen"
+        name={Screens.LoginScreen}
         component={LoginScreen}
         options={{headerShown: false}}
       />
       <AppStack.Screen
-        name="HomeScreen"
-        component={HomeScreen}
+        name={Screens.WelcomeScreen}
+        component={WelcomeScreen}
         options={(props: {navigation: any}) => ({
           headerRight: () => (
             <TouchableOpacity
@@ -31,7 +33,7 @@ export const AppNavigator = () => {
                   type: LoginActionTypes.SET_USER,
                   payload: {username: undefined, password: undefined},
                 });
-                props.navigation.reset({routes: [{name: 'LoginScreen'}]});
+                props.navigation.reset({routes: [{name: Screens.LoginScreen}]});
               }}>
               <Text>LOGOUT</Text>
             </TouchableOpacity>
@@ -39,9 +41,28 @@ export const AppNavigator = () => {
         })}
       />
       <AppStack.Screen
-        name="RegistrationScreen"
+        name={Screens.RegistrationScreen}
         component={RegistrationScreen}
       />
+      <AppStack.Screen
+        name={Screens.TaskListScreen}
+        component={TaskListScreen}
+        options={(props: {navigation: any}) => {
+          return {
+            headerRight: () => (
+              <TouchableOpacity
+                onPress={() => {
+                  props.navigation.navigate(Screens.NewTaskScreen);
+                }}>
+                <View style={{marginRight: 16}}>
+                  <Text style={{fontSize: 28}}>+</Text>
+                </View>
+              </TouchableOpacity>
+            ),
+          };
+        }}
+      />
+      <AppStack.Screen name={Screens.NewTaskScreen} component={NewTaskScreen} />
     </AppStack.Navigator>
   );
 };
