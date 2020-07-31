@@ -1,16 +1,23 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View} from 'react-native';
 import styles from '../styles/homeScreen.style';
 import {useNavigation} from '@react-navigation/native';
-import {StyledButton, AppButton} from '../components';
+import {AppButton} from '../../../components';
+import {useDispatch} from 'react-redux';
+import {getTasks} from '../../todolist';
 
 interface ExampleButtonProps {
   text: string;
   screenName: string;
 }
 
-const HomeScreen = () => {
+export const HomeScreen = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getTasks());
+  }, []);
 
   const navigateToExample = (screenName: string) => {
     navigation.navigate(screenName);
@@ -36,5 +43,3 @@ const HomeScreen = () => {
     </View>
   );
 };
-
-export default HomeScreen;

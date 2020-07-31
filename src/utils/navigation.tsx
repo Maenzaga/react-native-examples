@@ -2,10 +2,10 @@ import React from 'react';
 import {TouchableOpacity, Text, View} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {useDispatch} from 'react-redux';
-import HomeScreen from '../screens/HomeScreen';
+import {HomeScreen} from '../modules/home';
 import {LoginScreen, WelcomeScreen, LoginActionTypes} from '../modules/login';
 import {RegistrationScreen} from '../modules/signup';
-import {TaskListScreen, NewTaskScreen} from '../modules/todolist';
+import {TaskListScreen, NewTaskScreen, clearTasks} from '../modules/todolist';
 import {Screens} from '../paths';
 
 const AppStack = createStackNavigator();
@@ -49,15 +49,28 @@ export const AppNavigator = () => {
         component={TaskListScreen}
         options={(props: {navigation: any}) => {
           return {
+            // <Text style={{fontSize: 14}}>CLEAR TASKS</Text>
             headerRight: () => (
-              <TouchableOpacity
-                onPress={() => {
-                  props.navigation.navigate(Screens.NewTaskScreen);
-                }}>
-                <View style={{marginRight: 16}}>
-                  <Text style={{fontSize: 28}}>+</Text>
-                </View>
-              </TouchableOpacity>
+              <View style={{flexDirection: 'row'}}>
+                <TouchableOpacity
+                  onPress={() => {
+                    dispatch(clearTasks());
+                  }}>
+                  <View style={{marginRight: 16}}>
+                    <Text style={{fontSize: 14, textAlignVertical: 'center'}}>
+                      CLEAR TASKS
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    props.navigation.navigate(Screens.NewTaskScreen);
+                  }}>
+                  <View style={{marginRight: 16}}>
+                    <Text style={{fontSize: 28}}>+</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
             ),
           };
         }}

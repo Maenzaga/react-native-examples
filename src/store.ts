@@ -1,5 +1,6 @@
 import {combineReducers, createStore, Store, applyMiddleware} from 'redux';
 import logger from 'redux-logger';
+import thunk from 'redux-thunk';
 import {counterReducer} from './counter.reducer';
 import {UserState, loginReducer} from './modules/login/login.reducer';
 import {TodoState, todoReducer} from './modules/todolist';
@@ -16,7 +17,7 @@ const configureStore = (): Store<ApplicationState> => {
     user: loginReducer,
     todos: todoReducer,
   });
-  return createStore(rootReducer, applyMiddleware(logger));
+  return createStore(rootReducer, applyMiddleware(...[thunk, logger]));
 };
 
 export const store: Store<ApplicationState> = configureStore();

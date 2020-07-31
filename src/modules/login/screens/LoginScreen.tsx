@@ -13,6 +13,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {ApplicationState} from '../../../store';
 import {LoginActionTypes} from '../login.actions';
 import {useNavigation} from '@react-navigation/native';
+import SafeAreaView from 'react-native-safe-area-view';
 
 export const LoginScreen = () => {
   const [username, setUsername] = useState('');
@@ -58,33 +59,35 @@ export const LoginScreen = () => {
   };
 
   return (
-    <ScrollView style={{padding: 16}} keyboardShouldPersistTaps="always">
-      <TextInput
-        value={username}
-        placeholder="Username"
-        onChangeText={onUsernameChanged}
-      />
-      <View style={{marginVertical: 4}} />
-      <TextInput
-        value={password}
-        placeholder="Password"
-        onChangeText={onPasswordChanged}
-      />
-      <View style={{marginVertical: 4}} />
-      <View
-        style={{
-          flex: 1,
-          flexDirection: 'row',
-        }}>
-        <View style={{flex: 1, marginRight: 32}}>
-          <Button title="Login" onPress={onPress} />
+    <SafeAreaView style={{flex: 1}}>
+      <ScrollView style={{padding: 16}} keyboardShouldPersistTaps="always">
+        <TextInput
+          value={username}
+          placeholder="Username"
+          onChangeText={onUsernameChanged}
+        />
+        <View style={{marginVertical: 4}} />
+        <TextInput
+          value={password}
+          placeholder="Password"
+          onChangeText={onPasswordChanged}
+        />
+        <View style={{marginVertical: 4}} />
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+          }}>
+          <View style={{flex: 1, marginRight: 32}}>
+            <Button title="Login" onPress={onPress} />
+          </View>
+          <TouchableOpacity
+            style={{flex: 1, alignSelf: 'center'}}
+            onPress={() => navigation.navigate('RegistrationScreen')}>
+            <Text>Register</Text>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          style={{flex: 1, alignSelf: 'center'}}
-          onPress={() => navigation.navigate('RegistrationScreen')}>
-          <Text>Register</Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 };

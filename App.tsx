@@ -12,12 +12,15 @@ import {Provider} from 'react-redux';
 import {store} from './src/store';
 import {NavigationContainer} from '@react-navigation/native';
 import {AppNavigator} from './src/utils/navigation';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 const App = () => {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <AppNavigator />
+        <SafeAreaProvider>
+          <AppNavigator />
+        </SafeAreaProvider>
       </NavigationContainer>
     </Provider>
   );
