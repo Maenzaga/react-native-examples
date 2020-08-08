@@ -7,6 +7,7 @@ export interface Task {
   id: string;
   title: string;
   description: string;
+  dueDate: string;
 }
 
 export enum TodoActionTypes {
@@ -70,6 +71,18 @@ export const editTask = (task: Task): ThunkResult => {
           .slice(0, index)
           .concat(task)
           .concat(currentTasks.slice(index + 1)),
+      ),
+    );
+  };
+};
+
+export const deleteTask = (task: Task): ThunkResult => {
+  return async (dispatch, getState) => {
+    dispatch(todoTaskRequest(task));
+    const currentTasks = getState().todos.tasks;
+    dispatch(
+      todoSetTasks(
+        currentTasks.filter((curTask: Task) => curTask.id !== task.id),
       ),
     );
   };

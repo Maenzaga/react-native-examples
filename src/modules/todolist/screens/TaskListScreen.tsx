@@ -29,13 +29,13 @@ export const TaskListScreen = () => {
         task={item}
         onPress={() => onPress(item)}
         compact
-        style={{margin: 8}}
+        style={{marginHorizontal: 16, marginVertical: 12}}
       />
     );
   };
 
   return (
-    <View>
+    <View style={{flex: 1, backgroundColor: '#fff'}}>
       <TaskDetailsModal
         task={task}
         isVisible={isModalVisible}

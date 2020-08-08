@@ -8,6 +8,9 @@ import {RegistrationScreen} from '../modules/signup';
 import {TaskListScreen, NewTaskScreen, clearTasks} from '../modules/todolist';
 import {Screens} from '../paths';
 
+import Icon from 'react-native-vector-icons/FontAwesome';
+const MyIcon = () => <Icon name="trash" size={20} color="#000" />;
+
 const AppStack = createStackNavigator();
 
 export const AppNavigator = () => {
@@ -49,17 +52,14 @@ export const AppNavigator = () => {
         component={TaskListScreen}
         options={(props: {navigation: any}) => {
           return {
-            // <Text style={{fontSize: 14}}>CLEAR TASKS</Text>
             headerRight: () => (
               <View style={{flexDirection: 'row'}}>
                 <TouchableOpacity
                   onPress={() => {
                     dispatch(clearTasks());
                   }}>
-                  <View style={{marginRight: 16}}>
-                    <Text style={{fontSize: 14, textAlignVertical: 'center'}}>
-                      CLEAR TASKS
-                    </Text>
+                  <View style={{marginRight: 16, marginTop: 8}}>
+                    <MyIcon />
                   </View>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -72,10 +72,21 @@ export const AppNavigator = () => {
                 </TouchableOpacity>
               </View>
             ),
+            title: 'TODO List',
+            headerBackTitleVisible: false,
           };
         }}
       />
-      <AppStack.Screen name={Screens.NewTaskScreen} component={NewTaskScreen} />
+      <AppStack.Screen
+        name={Screens.NewTaskScreen}
+        component={NewTaskScreen}
+        options={(props: {route: any}) => {
+          return {
+            title: props.route.params ? 'Edit Task' : 'New Task',
+            headerBackTitleVisible: false,
+          };
+        }}
+      />
     </AppStack.Navigator>
   );
 };
