@@ -72,7 +72,7 @@ export const AppNavigator = () => {
                 </TouchableOpacity>
               </View>
             ),
-            title: 'TODO List',
+            title: 'TO-DO',
             headerBackTitleVisible: false,
           };
         }}

@@ -53,6 +53,9 @@ export const CustomCalendar = ({
         // Disable right arrow. Default = false
         disableArrowRight={false}
         markedDates={markedDates}
+        theme={{
+          arrowColor: '#add8e6',
+        }}
       />
     </View>
   );
