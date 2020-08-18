@@ -72,6 +72,7 @@ export const HomeScreen = () => {
       </TouchableWithoutFeedback>
       <ExampleButton text="Login" screenName="LoginScreen" />
       <ExampleButton text="TODO List" screenName="TaskListScreen" />
+      <ExampleButton text="GitHub" screenName="GitHubTabs" />
     </View>
   );
 };

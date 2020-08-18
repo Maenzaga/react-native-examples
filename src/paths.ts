@@ -5,4 +5,7 @@ export enum Screens {
   RegistrationScreen = 'RegistrationScreen',
   TaskListScreen = 'TaskListScreen',
   NewTaskScreen = 'NewTaskScreen',
+  GitHubTabs = 'GitHubTabs',
+  SearchRepository = 'SearchRepository',
+  SearchUser = 'SearchUser',
 }

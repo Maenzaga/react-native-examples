@@ -1,17 +1,36 @@
 import React from 'react';
 import {TouchableOpacity, Text, View} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {useDispatch} from 'react-redux';
 import {HomeScreen} from '../modules/home';
 import {LoginScreen, WelcomeScreen, LoginActionTypes} from '../modules/login';
 import {RegistrationScreen} from '../modules/signup';
+import {SearchRepositoryScreen, SearchUsersScreen} from '../modules/github';
 import {TaskListScreen, NewTaskScreen, clearTasks} from '../modules/todolist';
 import {Screens} from '../paths';
-
 import Icon from 'react-native-vector-icons/FontAwesome';
+
 const MyIcon = () => <Icon name="trash" size={20} color="#000" />;
 
 const AppStack = createStackNavigator();
+
+const BottomTabs = createBottomTabNavigator();
+const BottomTabsNavigator = () => (
+  <BottomTabs.Navigator>
+    <BottomTabs.Screen
+      name={Screens.SearchRepository}
+      component={SearchRepositoryScreen}
+      options={{
+        tabBarLabel: 'Search Repos',
+        title: 'heyas',
+      }}></BottomTabs.Screen>
+    <BottomTabs.Screen
+      name={Screens.SearchUser}
+      component={SearchUsersScreen}
+      options={{tabBarLabel: 'Search Users'}}></BottomTabs.Screen>
+  </BottomTabs.Navigator>
+);
 
 export const AppNavigator = () => {
   const dispatch = useDispatch();
@@ -86,6 +105,10 @@ export const AppNavigator = () => {
             headerBackTitleVisible: false,
           };
         }}
+      />
+      <AppStack.Screen
+        name={Screens.GitHubTabs}
+        component={BottomTabsNavigator}
       />
     </AppStack.Navigator>
   );
