@@ -3,21 +3,23 @@ import {View, ListRenderItemInfo, Text, TouchableOpacity} from 'react-native';
 import {useSelector} from 'react-redux';
 import {ApplicationState} from '../../../../store';
 import {
-  searchRepos,
+  searchRepos as searchReposAction,
   SearchReposActionTypes,
   SearchReposActions,
 } from '../../features/searchRepos/searchRepos.actions';
 import {GitHubRepo} from '../../types';
 import {withGitHubSearch} from '../../../../components';
 import {RepoBranchesScreen} from '../RepoBranchesScreen';
+import {useSearchRepositories} from './useSearchRepository';
 
 export const SearchRepositoryScreen = () => {
-  const isLoading = useSelector(
-    (state: ApplicationState) => state.searchRepos.isLoading,
-  );
-  const repos = useSelector(
-    (state: ApplicationState) => state.searchRepos.data,
-  );
+  // const isLoading = useSelector(
+  //   (state: ApplicationState) => state.searchRepos.isLoading,
+  // );
+  // const repos = useSelector(
+  //   (state: ApplicationState) => state.searchRepos.data,
+  // );
+  const {isLoading, repos, searchRepos} = useSearchRepositories();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [user, setUser] = useState<string | undefined>(undefined);
   const [repo, setRepo] = useState<string | undefined>(undefined);
@@ -36,7 +38,7 @@ export const SearchRepositoryScreen = () => {
     const repo = info.item;
     return (
       <TouchableOpacity onPress={() => showModal(repo.owner.login, repo.name)}>
-        <View style={{paddingVertical: 16}}>
+        <View style={{padding: 16}}>
           <Text style={{fontWeight: 'bold'}}>{repo.name}</Text>
           <Text style={{fontStyle: 'italic'}}>{repo.description}</Text>
         </View>
@@ -59,6 +61,7 @@ export const SearchRepositoryScreen = () => {
           onClose={hideModal}
         />
       )}
+      withRedux={false}
     />
   );
 };

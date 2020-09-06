@@ -48,22 +48,22 @@ type ThunkResult = ThunkAction<
 export const searchRepos = (query: string): ThunkResult => {
   return async (dispatch) => {
     dispatch({type: SearchReposActionTypes.SEARCH_REPOS_REQUEST});
-    setTimeout(() => {
-      dispatch({
-        type: SearchReposActionTypes.SEARCH_REPOS_SUCCESS,
-        payload: {data: mockJson},
-      });
-    }, 1500);
-    // return githubService
-    //   .searchRepos(query)
-    //   .then((response: AxiosResponse<any>) => {
-    //     const responseData = response.data;
-    //     setTimeout(() => {
-    //       dispatch({
-    //         type: SearchReposActionTypes.SEARCH_REPOS_SUCCESS,
-    //         payload: {data: responseData.items},
-    //       });
-    //     }, 2000);
+    // setTimeout(() => {
+    //   dispatch({
+    //     type: SearchReposActionTypes.SEARCH_REPOS_SUCCESS,
+    //     payload: {data: mockJson},
     //   });
+    // }, 1500);
+    return githubService
+      .searchRepos(query)
+      .then((response: AxiosResponse<any>) => {
+        const responseData = response.data;
+        setTimeout(() => {
+          dispatch({
+            type: SearchReposActionTypes.SEARCH_REPOS_SUCCESS,
+            payload: {data: responseData.items},
+          });
+        }, 2000);
+      });
   };
 };

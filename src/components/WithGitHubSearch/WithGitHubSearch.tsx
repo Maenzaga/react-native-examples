@@ -10,6 +10,7 @@ import {Action} from 'redux';
 import {useDispatch} from 'react-redux';
 import {debounce} from 'lodash';
 import styles from './styles';
+import {Separator} from '../Separator';
 
 type DispatchingAction = (query: string) => void;
 
@@ -17,6 +18,7 @@ type HocProps<T extends object | undefined, A extends Action> = {
   isLoading: boolean;
   items: T[];
   cleanupAction: A;
+  withRedux: boolean;
   dispatchingAction: DispatchingAction;
   renderItem: ListRenderItem<T>;
   renderModal?: () => React.ReactNode;
@@ -29,6 +31,8 @@ type WithGitHubSearchProps<
 
 const debouncingTime = 800;
 
+const ItemSeparator = () => <Separator />;
+
 export const withGitHubSearch = <
   T extends object = {},
   A extends Action = Action
@@ -37,6 +41,7 @@ export const withGitHubSearch = <
     const {
       isLoading,
       items,
+      withRedux,
       dispatchingAction,
       cleanupAction,
       renderItem,
@@ -52,7 +57,7 @@ export const withGitHubSearch = <
     }, []);
 
     const triggerSearch = (query: string) => {
-      dispatch(dispatchingAction(query));
+      withRedux ? dispatch(dispatchingAction(query)) : dispatchingAction(query);
     };
 
     const debouncedSearch = useCallback(
@@ -73,6 +78,7 @@ export const withGitHubSearch = <
           value={query}
           placeholder="Type something here..."
           onChangeText={onQueryChanged}
+          style={{margin: 16}}
         />
         {isLoading && (!items || items.length === 0) ? (
           <ActivityIndicator
@@ -89,10 +95,12 @@ export const withGitHubSearch = <
         ) : null}
         {items ? (
           <FlatList
+            style={{marginTop: 16}}
             data={items}
             renderItem={renderItem}
             keyExtractor={keyExtractor}
             showsVerticalScrollIndicator={false}
+            ItemSeparatorComponent={ItemSeparator}
           />
         ) : null}
         {renderModal && renderModal()}

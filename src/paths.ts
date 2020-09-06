@@ -8,4 +8,5 @@ export enum Screens {
   GitHubTabs = 'GitHubTabs',
   SearchRepository = 'SearchRepository',
   SearchUser = 'SearchUser',
+  StylingExample = 'StylingExample',
 }

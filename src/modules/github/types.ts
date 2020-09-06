@@ -8,4 +8,11 @@ export type GitHubUser = {
   avatar: string;
 };
 
-export type GitHubBranch = {};
+export type GitHubBranch = {
+  name: string;
+  commit: {
+    sha: string;
+    url: string;
+  };
+  protected: boolean;
+};

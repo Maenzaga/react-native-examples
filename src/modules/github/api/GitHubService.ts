@@ -24,6 +24,9 @@ class GitHubService {
 
   getRepoBranches = (user: string, repo: string): Promise<AxiosResponse> =>
     axios.get(`https://api.github.com/repos/${user}/${repo}/branches`);
+
+  getUserRepos = (user: string): Promise<AxiosResponse> =>
+    axios.get(`https://api.github.com/users/${user}/repos`);
 }
 
 const githubService = new GitHubService();

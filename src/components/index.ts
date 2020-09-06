@@ -5,3 +5,4 @@ export * from './Separator';
 export * from './TaskDetailsModal';
 export * from './Calendar';
 export * from './WithGitHubSearch';
+export * from './ReposModal';

@@ -1,9 +1,14 @@
 import React, {useEffect} from 'react';
-import {View, Text} from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  Dimensions,
+  ActivityIndicator,
+} from 'react-native';
 import Modal from 'react-native-modal';
-import {useDispatch, useSelector} from 'react-redux';
-import {getRepoBranches} from '../../features/repoBranches';
-import {ApplicationState} from '../../../../store';
+import {useFetchRepoBranches} from '../../../../hooks/useFetchRepoBranches';
+import {GitHubBranch} from '../../types';
 
 interface RepoBranchesProps {
   user?: string;
@@ -18,29 +23,54 @@ export const RepoBranchesScreen = ({
   isVisible,
   onClose,
 }: RepoBranchesProps) => {
-  const dispatch = useDispatch();
-  const isLoading = useSelector(
-    (state: ApplicationState) => state.repoBranches.isLoading,
-  );
-  const branches = useSelector(
-    (state: ApplicationState) => state.repoBranches.branches,
-  );
+  const {
+    isLoading,
+    branches,
+    fetchRepoBranches,
+    reset,
+  } = useFetchRepoBranches();
 
   useEffect(() => {
-    console.log('useEffect');
     if (user && repo) {
-      console.log('holaaa');
-      dispatch(getRepoBranches(user, repo));
+      fetchRepoBranches(user, repo);
     }
   }, [user, repo]);
+
+  useEffect(() => {
+    if (!isVisible) {
+      reset();
+    }
+  }, [isVisible]);
 
   return (
     <Modal
       isVisible={isVisible}
       onBackButtonPress={onClose}
       onBackdropPress={onClose}>
-      <View style={{backgroundColor: '#f6f6f6', padding: 16, borderRadius: 8}}>
-        <Text>Hello World</Text>
+      <View
+        style={{
+          backgroundColor: '#f6f6f6',
+          padding: 16,
+          borderRadius: 8,
+          height: Dimensions.get('screen').height / 2,
+        }}>
+        {isLoading && (
+          <ActivityIndicator
+            size="large"
+            style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}
+          />
+        )}
+        {branches && !isLoading && (
+          <FlatList
+            data={branches}
+            renderItem={({item}) => (
+              <View style={{paddingVertical: 8}}>
+                <Text style={{fontSize: 14}}>{item.name}</Text>
+              </View>
+            )}
+            keyExtractor={(_: GitHubBranch, index: number) => index.toString()}
+          />
+        )}
       </View>
     </Modal>
   );

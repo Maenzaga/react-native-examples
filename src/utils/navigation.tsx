@@ -10,6 +10,7 @@ import {SearchRepositoryScreen, SearchUsersScreen} from '../modules/github';
 import {TaskListScreen, NewTaskScreen, clearTasks} from '../modules/todolist';
 import {Screens} from '../paths';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {StylingExampleScreen} from '../modules/stylingExamples/screens/StylingExampleScreen';
 
 const MyIcon = () => <Icon name="trash" size={20} color="#000" />;
 
@@ -17,18 +18,22 @@ const AppStack = createStackNavigator();
 
 const BottomTabs = createBottomTabNavigator();
 const BottomTabsNavigator = () => (
-  <BottomTabs.Navigator>
+  <BottomTabs.Navigator
+    tabBarOptions={{
+      tabStyle: {alignSelf: 'center'},
+      labelStyle: {fontSize: 16, fontWeight: 'bold'},
+    }}>
     <BottomTabs.Screen
       name={Screens.SearchRepository}
       component={SearchRepositoryScreen}
       options={{
-        tabBarLabel: 'Search Repos',
+        tabBarLabel: 'Repos',
         title: 'heyas',
       }}></BottomTabs.Screen>
     <BottomTabs.Screen
       name={Screens.SearchUser}
       component={SearchUsersScreen}
-      options={{tabBarLabel: 'Search Users'}}></BottomTabs.Screen>
+      options={{tabBarLabel: 'Users'}}></BottomTabs.Screen>
   </BottomTabs.Navigator>
 );
 
@@ -109,6 +114,11 @@ export const AppNavigator = () => {
       <AppStack.Screen
         name={Screens.GitHubTabs}
         component={BottomTabsNavigator}
+        options={{headerBackTitleVisible: false, headerTitle: 'GitHub'}}
+      />
+      <AppStack.Screen
+        name={Screens.StylingExample}
+        component={StylingExampleScreen}
       />
     </AppStack.Navigator>
   );

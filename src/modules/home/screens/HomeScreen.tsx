@@ -73,6 +73,7 @@ export const HomeScreen = () => {
       <ExampleButton text="Login" screenName="LoginScreen" />
       <ExampleButton text="TODO List" screenName="TaskListScreen" />
       <ExampleButton text="GitHub" screenName="GitHubTabs" />
+      <ExampleButton text="StylingExample" screenName="StylingExample" />
     </View>
   );
 };
